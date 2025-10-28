@@ -73,7 +73,7 @@ async def on_message(message):
             print(f"Erro ao processar o feed: {e}")
 
 # --- TAREFA AGENDADA ---
-@tasks.loop(hours=6)
+@tasks.loop(hours=3)
 async def send_news():
     channel = bot.get_channel(NEWS_CHANNEL_ID)
     if not channel:
@@ -84,7 +84,7 @@ async def send_news():
     try:
         feed = feedparser.parse(NEWS_FEED_URL)
         
-        for entry in feed.entries[:3]:
+        for entry in feed.entries[:10]:
             clean_description = clean_html(entry.summary)
             if len(clean_description) > 200:
                 description = clean_description[:200] + '...'
